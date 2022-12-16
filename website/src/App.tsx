@@ -1,26 +1,38 @@
 import React from "react";
-import logo from "./logo.svg";
-import "./App.css";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Collection from "./screens/collection/Collection";
+import Home from "./screens/home/Home";
+import { SavedCollection } from "./types";
+
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Home />,
+  },
+  {
+    path: "collection",
+    element: <Collection />,
+  },
+  {
+    path: "collection/:slug",
+    element: <Collection />,
+    loader: ({ params }) => {
+      const { slug } = params;
+      // TODO: get saved collections from localstorage
+      const savedCollections: SavedCollection[] = [];
+      const collection = savedCollections.find(
+        (collection) => collection.slug === slug
+      );
+      if (!collection) {
+        throw new Response("Not Found", { status: 404 });
+      }
+      return collection;
+    },
+  },
+]);
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  return <RouterProvider router={router} />;
 }
 
 export default App;
