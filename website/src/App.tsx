@@ -1,8 +1,13 @@
 import React from "react";
+import { QueryClient, QueryClientProvider } from "react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ReactQueryDevtools } from "react-query/devtools";
+
 import Collection from "./screens/collection/Collection";
 import Home from "./screens/home/Home";
 import { SavedCollection } from "./types";
+
+const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   {
@@ -32,7 +37,12 @@ const router = createBrowserRouter([
 ]);
 
 function App() {
-  return <RouterProvider router={router} />;
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+      <ReactQueryDevtools initialIsOpen={false} />
+    </QueryClientProvider>
+  );
 }
 
 export default App;
