@@ -24,7 +24,12 @@ const router = createBrowserRouter([
     loader: ({ params }) => {
       const { slug } = params;
       // TODO: get saved collections from localstorage
-      const savedCollections: SavedCollection[] = [];
+      const savedCollections: SavedCollection[] = [
+        {
+          slug: "bored",
+          tokens: [{ tokenId: "1", image: "bla", name: "jotape" }],
+        },
+      ];
       const collection = savedCollections.find(
         (collection) => collection.slug === slug
       );
