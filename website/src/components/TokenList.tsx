@@ -6,6 +6,7 @@ import TokenItem from "./TokenItem";
 
 interface TokenListProps {
   collectionId: string;
+  addToken: (token: Token) => void;
 }
 
 interface TokensProps {
@@ -13,7 +14,7 @@ interface TokensProps {
   market: unknown;
 }
 
-const TokenList = ({ collectionId }: TokenListProps) => {
+const TokenList = ({ collectionId, addToken }: TokenListProps) => {
   const {
     data,
     error,
@@ -35,9 +36,11 @@ const TokenList = ({ collectionId }: TokenListProps) => {
   }, [collectionId]);
 
   return (
-    <div className="h-4/5 overflow-scroll w-52 border-r border-slate-300">
+    <div className="overflow-scroll w-52">
       {data?.pages.map(({ tokens }) =>
-        tokens.map(({ token }: TokensProps) => <TokenItem {...token} />)
+        tokens.map(({ token }: TokensProps) => (
+          <TokenItem key={token.name} {...token} addToken={addToken} />
+        ))
       )}
       {hasNextPage && (
         <button className="flex m-auto my-1" onClick={() => fetchNextPage()}>

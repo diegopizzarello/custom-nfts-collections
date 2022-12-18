@@ -2,6 +2,8 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 
 import Collection from "./screens/collection/Collection";
 import Home from "./screens/home/Home";
@@ -44,7 +46,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
+      <DndProvider backend={HTML5Backend}>
+        <RouterProvider router={router} />
+      </DndProvider>
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

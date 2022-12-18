@@ -3,8 +3,9 @@ import { useInfiniteQuery } from "react-query";
 import { useLoaderData } from "react-router-dom";
 import Select from "react-select";
 import { fetchCollections } from "../../api/collection";
+import Grid from "../../components/Grid";
 import TokenList from "../../components/TokenList";
-import { SavedCollection } from "../../types";
+import { SavedCollection, Token } from "../../types";
 
 interface Collection {
   id: string;
@@ -45,6 +46,10 @@ const Collection = () => {
     }
   }, [data]);
 
+  const addToken = (token: Token) => {
+    setTokens((prevState) => [...prevState, token]);
+  };
+
   return (
     <div className="h-screen">
       <div className="h-1/5 flex items-center px-2">
@@ -60,7 +65,12 @@ const Collection = () => {
           }}
         />
       </div>
-      {collection && <TokenList collectionId={collection} />}
+      <div className="flex h-4/5">
+        {collection && (
+          <TokenList collectionId={collection} addToken={addToken} />
+        )}
+        <Grid tokens={tokens} />
+      </div>
     </div>
   );
 };
