@@ -19,11 +19,13 @@ const Grid = ({ tokens }: GridProps) => {
   return (
     <div
       ref={drop}
-      className="flex h-full w-full bg-slate-400 border-l border-slate-300 p-8"
+      className="h-full w-full bg-slate-100 border-l border-slate-300 p-8 overflow-y-scroll"
     >
-      {tokens.map((token) => (
-        <TokenCard key={token.name} {...token} />
-      ))}
+      <div className="h-fit grid grid-cols-2 gap-y-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
+        {tokens.map((token) => (
+          <TokenCard key={token.name} {...token} />
+        ))}
+      </div>
     </div>
   );
 };

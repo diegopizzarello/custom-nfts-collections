@@ -14,7 +14,7 @@ const TokenCard = ({ tokenId, name, image }: TokenCardProps) => {
         alt={`${name} NFT`}
         className="object-cover h-32 w-32 rounded-xl"
       />
-      <span className="text-base pt-1 self-center">#{tokenId}</span>
+      <span className="text-sm font-semibold pt-2 self-center">#{tokenId}</span>
     </div>
   );
 };

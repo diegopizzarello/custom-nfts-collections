@@ -36,7 +36,7 @@ const TokenList = ({ collectionId, addToken }: TokenListProps) => {
   }, [collectionId]);
 
   return (
-    <div className="overflow-scroll w-52">
+    <div className="overflow-y-scroll w-52">
       {data?.pages.map(({ tokens }) =>
         tokens.map(({ token }: TokensProps) => (
           <TokenItem key={token.name} {...token} addToken={addToken} />
