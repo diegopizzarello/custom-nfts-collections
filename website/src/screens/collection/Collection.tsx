@@ -1,11 +1,12 @@
-import React, { useEffect, useState, useSyncExternalStore } from "react";
+import React, { useEffect, useState } from "react";
 import { useInfiniteQuery } from "react-query";
-import { useLoaderData } from "react-router-dom";
+import { useLoaderData, useNavigate } from "react-router-dom";
 import Select from "react-select";
 import { fetchCollections } from "../../api/collection";
 import Grid from "../../components/Grid";
 import TokenList from "../../components/TokenList";
 import { SavedCollection, Token } from "../../types";
+import { saveCollection } from "../../utils/collections";
 import { isSameToken } from "../../utils/token";
 
 interface Collection {
@@ -23,6 +24,7 @@ const Collection = () => {
   const [slug, setSlug] = useState(collectionToEdit?.slug || "");
   const [options, setOptions] = useState<SelectOptions[]>([]);
   const [collection, setCollection] = useState<string | undefined>(undefined);
+  const navigate = useNavigate();
 
   const {
     data,
@@ -48,7 +50,8 @@ const Collection = () => {
   }, [data]);
 
   const addToken = (token: Token) => {
-    setTokens((prevState) => [...prevState, token]);
+    const { tokenId, image, contract } = token;
+    setTokens((prevState) => [...prevState, { tokenId, image, contract }]);
   };
 
   const removeToken = (token: Token) => {
@@ -56,12 +59,17 @@ const Collection = () => {
     setTokens(newTokens);
   };
 
+  const onSaveCollection = () => {
+    saveCollection(slug, tokens);
+    navigate("/");
+  };
+
   return (
     <div className="h-screen">
       <div className="h-1/5 flex items-center px-2">
         <Select
           isLoading={isFetching || isFetchingNextPage}
-          className="w-52"
+          className="w-52 mr-3"
           onChange={(newValue) => newValue && setCollection(newValue.value)}
           options={options}
           onMenuScrollToBottom={() => {
@@ -70,6 +78,21 @@ const Collection = () => {
             }
           }}
         />
+        <input
+          value={slug}
+          onChange={(e) => setSlug(e.target.value)}
+          placeholder="Custom Collection Name"
+          className="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        />
+        <button
+          onClick={onSaveCollection}
+          disabled={!slug}
+          className={`text-white bg-gray-800 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 ml-3 ${
+            !slug ? "opacity-40" : "hover:bg-gray-900"
+          }`}
+        >
+          Save
+        </button>
       </div>
       <div className="flex h-4/5">
         {collection && (
