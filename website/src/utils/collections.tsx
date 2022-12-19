@@ -1,6 +1,6 @@
-import { Token } from "../types";
+import { SavedCollection, Token } from "../types";
 
-export const getSavedCollections = () => {
+export const getSavedCollections = (): SavedCollection[] => {
   const t = localStorage.getItem("collections");
   if (!t) return [];
   return JSON.parse(t);

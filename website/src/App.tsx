@@ -1,13 +1,17 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 import { ReactQueryDevtools } from "react-query/devtools";
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 
 import Collection from "./screens/collection/Collection";
 import Home from "./screens/home/Home";
-import { SavedCollection } from "./types";
+import { getSavedCollections } from "./utils/collections";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +19,13 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <Home />,
+    loader: () => {
+      const collections = getSavedCollections();
+      if (!collections.length) {
+        return redirect("/collection");
+      }
+      return collections;
+    },
   },
   {
     path: "collection",
@@ -25,13 +36,7 @@ const router = createBrowserRouter([
     element: <Collection />,
     loader: ({ params }) => {
       const { slug } = params;
-      // TODO: get saved collections from localstorage
-      const savedCollections: SavedCollection[] = [
-        {
-          slug: "bored",
-          tokens: [{ tokenId: "1", image: "bla", contract: "jotape" }],
-        },
-      ];
+      const savedCollections = getSavedCollections();
       const collection = savedCollections.find(
         (collection) => collection.slug === slug
       );
