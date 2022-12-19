@@ -5,9 +5,10 @@ import TokenCard from "./TokenCard";
 
 interface GridProps {
   tokens: Token[];
+  removeToken: (name: string) => void;
 }
 
-const Grid = ({ tokens }: GridProps) => {
+const Grid = ({ tokens, removeToken }: GridProps) => {
   const [{ canDrop, isOver }, drop] = useDrop(() => ({
     accept: "token",
     drop: () => ({ name: "Grid" }),
@@ -23,7 +24,7 @@ const Grid = ({ tokens }: GridProps) => {
     >
       <div className="h-fit grid grid-cols-2 gap-y-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
         {tokens.map((token) => (
-          <TokenCard key={token.name} {...token} />
+          <TokenCard key={token.name} removeToken={removeToken} {...token} />
         ))}
       </div>
     </div>

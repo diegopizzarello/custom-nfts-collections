@@ -18,7 +18,7 @@ interface SelectOptions {
 
 const Collection = () => {
   const collectionToEdit = useLoaderData() as SavedCollection | undefined;
-  const [tokens, setTokens] = useState(collectionToEdit?.tokens || []);
+  const [tokens, setTokens] = useState<Token[]>(collectionToEdit?.tokens || []);
   const [slug, setSlug] = useState(collectionToEdit?.slug || "");
   const [options, setOptions] = useState<SelectOptions[]>([]);
   const [collection, setCollection] = useState<string | undefined>(undefined);
@@ -50,6 +50,11 @@ const Collection = () => {
     setTokens((prevState) => [...prevState, token]);
   };
 
+  const removeToken = (name: string) => {
+    const newTokens = tokens.filter((token) => token.name !== name);
+    setTokens(newTokens);
+  };
+
   return (
     <div className="h-screen">
       <div className="h-1/5 flex items-center px-2">
@@ -69,7 +74,7 @@ const Collection = () => {
         {collection && (
           <TokenList collectionId={collection} addToken={addToken} />
         )}
-        <Grid tokens={tokens} />
+        <Grid tokens={tokens} removeToken={removeToken} />
       </div>
     </div>
   );
