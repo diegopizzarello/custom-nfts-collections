@@ -4,9 +4,13 @@ import { SavedCollection } from "../types";
 
 interface CollectionCardProps {
   collection: SavedCollection;
+  deleteCollection: (slug: string) => void;
 }
 
-const CollectionCard = ({ collection }: CollectionCardProps) => {
+const CollectionCard = ({
+  collection,
+  deleteCollection,
+}: CollectionCardProps) => {
   const navigate = useNavigate();
   return (
     <div className="flex justify-between items-center w-full p-4 text-center bg-white border rounded-lg shadow-md mt-2 max-w-2xl">
@@ -18,7 +22,7 @@ const CollectionCard = ({ collection }: CollectionCardProps) => {
       </div>
       <div>
         <button
-          type="button"
+          onClick={() => deleteCollection(collection.slug)}
           className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-1"
         >
           Delete

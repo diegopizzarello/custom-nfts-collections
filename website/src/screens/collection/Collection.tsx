@@ -6,7 +6,7 @@ import { fetchCollections } from "../../api/collection";
 import Grid from "../../components/Grid";
 import TokenList from "../../components/TokenList";
 import { SavedCollection, Token } from "../../types";
-import { saveCollection } from "../../utils/collections";
+import { deleteCollection, saveCollection } from "../../utils/collections";
 import { isSameToken } from "../../utils/token";
 
 interface Collection {
@@ -60,6 +60,9 @@ const Collection = () => {
   };
 
   const onSaveCollection = () => {
+    if (collectionToEdit) {
+      deleteCollection(collectionToEdit.slug);
+    }
     saveCollection(slug, tokens);
     navigate("/");
   };
