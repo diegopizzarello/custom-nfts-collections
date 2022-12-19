@@ -1,6 +1,6 @@
 export interface Token {
+  contract: string;
   tokenId: string;
-  name: string;
   image: string;
 }
 

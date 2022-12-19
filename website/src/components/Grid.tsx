@@ -1,11 +1,12 @@
 import React from "react";
 import { useDrop } from "react-dnd";
 import { Token } from "../types";
+import { getKey } from "../utils/token";
 import TokenCard from "./TokenCard";
 
 interface GridProps {
   tokens: Token[];
-  removeToken: (name: string) => void;
+  removeToken: (token: Token) => void;
 }
 
 const Grid = ({ tokens, removeToken }: GridProps) => {
@@ -24,7 +25,11 @@ const Grid = ({ tokens, removeToken }: GridProps) => {
     >
       <div className="h-fit grid grid-cols-2 gap-y-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 xl:grid-cols-7">
         {tokens.map((token) => (
-          <TokenCard key={token.name} removeToken={removeToken} {...token} />
+          <TokenCard
+            key={getKey(token)}
+            token={token}
+            removeToken={removeToken}
+          />
         ))}
       </div>
     </div>

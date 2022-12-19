@@ -29,7 +29,7 @@ const router = createBrowserRouter([
       const savedCollections: SavedCollection[] = [
         {
           slug: "bored",
-          tokens: [{ tokenId: "1", image: "bla", name: "jotape" }],
+          tokens: [{ tokenId: "1", image: "bla", contract: "jotape" }],
         },
       ];
       const collection = savedCollections.find(

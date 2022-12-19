@@ -3,9 +3,8 @@ import { useDrag } from "react-dnd";
 import { Token } from "../types";
 
 interface TokenItemProps {
-  tokenId: string;
-  image: string;
-  name: string;
+  token: Token;
+  isDisabled?: boolean;
   addToken: (token: Token) => void;
 }
 
@@ -13,14 +12,14 @@ interface DropResult {
   name: string;
 }
 
-const TokenItem = ({ tokenId, image, name, addToken }: TokenItemProps) => {
+const TokenItem = ({ token, addToken, isDisabled }: TokenItemProps) => {
   const [{ isDragging }, drag] = useDrag(() => ({
     type: "token",
-    item: { tokenId, image, name },
+    item: token,
     end: (item, monitor) => {
       const dropResult = monitor.getDropResult<DropResult>();
       if (item && dropResult) {
-        addToken({ tokenId: item.tokenId, image: item.image, name: item.name });
+        addToken(token);
       }
     },
     collect: (monitor) => ({
@@ -30,9 +29,14 @@ const TokenItem = ({ tokenId, image, name, addToken }: TokenItemProps) => {
   }));
 
   return (
-    <div ref={drag} className="flex flex-row items-center py-2 px-2">
-      <img className="w-12 h-12 mr-2" src={image} />
-      <span className="text-sm">#{tokenId}</span>
+    <div
+      ref={isDisabled ? null : drag}
+      className={`flex flex-row items-center py-2 px-2 ${
+        isDisabled || isDragging ? "opacity-40" : "cursor-move"
+      }`}
+    >
+      <img draggable={false} className="w-12 h-12 mr-2" src={token.image} />
+      <span className="text-sm">#{token.tokenId}</span>
     </div>
   );
 };

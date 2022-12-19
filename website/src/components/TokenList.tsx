@@ -2,10 +2,12 @@ import React, { useEffect } from "react";
 import { useInfiniteQuery } from "react-query";
 import { fetchTokens } from "../api/collection";
 import { Token } from "../types";
+import { getKey, isSameToken } from "../utils/token";
 import TokenItem from "./TokenItem";
 
 interface TokenListProps {
   collectionId: string;
+  selectedTokens: Token[];
   addToken: (token: Token) => void;
 }
 
@@ -14,7 +16,11 @@ interface TokensProps {
   market: unknown;
 }
 
-const TokenList = ({ collectionId, addToken }: TokenListProps) => {
+const TokenList = ({
+  collectionId,
+  addToken,
+  selectedTokens,
+}: TokenListProps) => {
   const {
     data,
     error,
@@ -39,7 +45,12 @@ const TokenList = ({ collectionId, addToken }: TokenListProps) => {
     <div className="overflow-y-scroll w-52">
       {data?.pages.map(({ tokens }) =>
         tokens.map(({ token }: TokensProps) => (
-          <TokenItem key={token.name} {...token} addToken={addToken} />
+          <TokenItem
+            key={getKey(token)}
+            token={token}
+            isDisabled={!!selectedTokens.find((t) => isSameToken(token, t))}
+            addToken={addToken}
+          />
         ))
       )}
       {hasNextPage && (

@@ -6,6 +6,7 @@ import { fetchCollections } from "../../api/collection";
 import Grid from "../../components/Grid";
 import TokenList from "../../components/TokenList";
 import { SavedCollection, Token } from "../../types";
+import { isSameToken } from "../../utils/token";
 
 interface Collection {
   id: string;
@@ -50,8 +51,8 @@ const Collection = () => {
     setTokens((prevState) => [...prevState, token]);
   };
 
-  const removeToken = (name: string) => {
-    const newTokens = tokens.filter((token) => token.name !== name);
+  const removeToken = (token: Token) => {
+    const newTokens = tokens.filter((t) => !isSameToken(token, t));
     setTokens(newTokens);
   };
 
@@ -72,7 +73,11 @@ const Collection = () => {
       </div>
       <div className="flex h-4/5">
         {collection && (
-          <TokenList collectionId={collection} addToken={addToken} />
+          <TokenList
+            collectionId={collection}
+            selectedTokens={tokens}
+            addToken={addToken}
+          />
         )}
         <Grid tokens={tokens} removeToken={removeToken} />
       </div>
