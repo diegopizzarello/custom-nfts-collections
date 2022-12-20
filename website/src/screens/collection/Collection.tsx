@@ -40,13 +40,16 @@ const Collection = () => {
 
   useEffect(() => {
     if (data) {
+      const newOptions: SelectOptions[] = [];
       data.pages.forEach((page) => {
-        const newOptions = page.collections.map((collection: Collection) => ({
-          value: collection.id,
-          label: collection.name,
-        }));
-        setOptions([...options, ...newOptions]);
+        page.collections.forEach((collection: Collection) => {
+          newOptions.push({
+            value: collection.id,
+            label: collection.name,
+          });
+        });
       });
+      setOptions(newOptions);
     }
   }, [data]);
 

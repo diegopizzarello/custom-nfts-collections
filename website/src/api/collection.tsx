@@ -20,7 +20,6 @@ export const fetchTokens = async ({
   collectionId,
   pageParam = undefined,
 }: FetchTokens) => {
-  console.log("collectionId ", collectionId);
   const { data } = await axios.get(`${BASE_URL}/tokens/v5`, {
     params: {
       continuation: pageParam,
