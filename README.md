@@ -44,6 +44,8 @@ Let us know if you have any questions. Happy coding!
 
 # Documentation
 
+Live URL: https://nft-collection.pizzarello.dev/
+
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
