@@ -73,7 +73,7 @@ const Collection = () => {
       <div className="h-1/5 flex flex-col px-2 py-4 justify-around">
         <span
           onClick={() => navigate("/")}
-          className="text-sm text-gray-700 cursor-pointer"
+          className="text-sm text-gray-700 cursor-pointer w-fit"
         >{`< Collections`}</span>
         <div className="flex items-center">
           <Select

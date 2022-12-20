@@ -30,7 +30,8 @@ const TokenItem = ({ token, addToken, isDisabled }: TokenItemProps) => {
 
   return (
     <div
-      ref={isDisabled ? null : drag}
+      ref={drag}
+      draggable={!isDisabled}
       className={`flex flex-row items-center py-2 px-2 ${
         isDisabled || isDragging ? "opacity-40" : "cursor-move"
       }`}
