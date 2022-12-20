@@ -1,3 +1,6 @@
+<details>
+  <summary>Project Description</summary>
+
 # Frontend take-home: Custom Collections
 
 In the NFT world tokens are organized in Collections. Most of the times, each collection groups thousands of NFTs making it a bit hard to keep track of what's happening with the specific tokens we're interested in.
@@ -36,3 +39,5 @@ Note that the wireframes in this document are just for reference. More UI elemen
 We should be able to execute your solution without much hassle, and the app should be intuitive to use. We will evaluate your code based on clarity, performance, and maintainability. Make sure to include relevant tests and documentation.
 
 Let us know if you have any questions. Happy coding!
+
+</details>
